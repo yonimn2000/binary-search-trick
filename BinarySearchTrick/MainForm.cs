@@ -8,8 +8,6 @@ namespace YonatanMankovich.BinarySearchTrick
         public MainForm()
         {
             InitializeComponent();
-            lowerBoundNUD.Minimum = upperBoundNUD.Minimum = long.MinValue;
-            lowerBoundNUD.Maximum = upperBoundNUD.Maximum = long.MaxValue;
             UpdateMaxGuessesLBL();
         }
 
@@ -19,7 +17,7 @@ namespace YonatanMankovich.BinarySearchTrick
                 "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             if (thinkDialogResult == DialogResult.OK)
             {
-                QuestionForm questionForm = new QuestionForm((long)lowerBoundNUD.Value, (long)upperBoundNUD.Value);
+                QuestionForm questionForm = new QuestionForm((long)lowerBoundNUD.Value, (long)upperBoundNUD.Value+1);
                 questionForm.ShowDialog();
                 questionForm.Dispose();
             }
@@ -28,6 +26,7 @@ namespace YonatanMankovich.BinarySearchTrick
         private void NUDs_ValueChanged(object sender, EventArgs e)
         {
             UpdateMaxGuessesLBL();
+            lowerBoundNUD.Maximum = upperBoundNUD.Value - 1;
         }
 
         private void NUDs_KeyUp(object sender, KeyEventArgs e)

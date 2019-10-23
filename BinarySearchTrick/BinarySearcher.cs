@@ -2,7 +2,7 @@
 
 namespace YonatanMankovich.BinarySearchTrick
 {
-    public class BinarySearcher
+    public struct BinarySearcher
     {
         public long LowerBound { get; private set; }
         public long UpperBound { get; private set; }
@@ -10,6 +10,9 @@ namespace YonatanMankovich.BinarySearchTrick
 
         public BinarySearcher(long lowerBound, long upperBound)
         {
+            LowerBound = 0;
+            UpperBound = 0;
+            CurrentNumber = 0;
             ShrinkRange(lowerBound, upperBound);
         }
 

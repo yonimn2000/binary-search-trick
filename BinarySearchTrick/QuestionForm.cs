@@ -1,27 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace YonatanMankovich.BinarySearchTrick
 {
     public partial class QuestionForm : Form
     {
-        private readonly BinarySearcher binarySearcher;
+        private BinarySearcher binarySearcher;
         private int guesses;
-        private readonly int totalGuesses;
+        private int totalGuesses;
+        private readonly Stack<BinarySearcher> stack = new Stack<BinarySearcher>();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="lowerBound">Inclusive</param>
-        /// <param name="upperBound">Inclusive</param>
         public QuestionForm(long lowerBound, long upperBound)
         {
             InitializeComponent();
             binarySearcher = new BinarySearcher(lowerBound, upperBound);
-            numberLBL.Text = binarySearcher.CurrentNumber.ToString();
+            stack.Push(binarySearcher);
             totalGuesses = binarySearcher.GetMaxNumberOfGuesses();
-            guesses = 0;
-            MakeMove();
+            guesses = 1;
+            ShowBinarySearcherData();
         }
 
         private void correctBTN_Click(object sender, EventArgs e)
@@ -43,11 +40,29 @@ namespace YonatanMankovich.BinarySearchTrick
 
         private void MakeMove()
         {
+            stack.Push(binarySearcher);
+            guesses++;
+            ShowBinarySearcherData();
+        }
+
+        private void ShowBinarySearcherData()
+        {
             numberLBL.Text = binarySearcher.CurrentNumber.ToString();
-            Text = $"Guess {++guesses} out of {totalGuesses}";
-            if (guesses == totalGuesses)
-                leftBTN.Enabled = rightBTN.Enabled = false;
-            boundsLBL.Text = $"Your number is between {binarySearcher.LowerBound} and {binarySearcher.UpperBound}.";
+            Text = $"Guess {guesses} out of {totalGuesses}";
+            leftBTN.Enabled = rightBTN.Enabled = !(guesses == totalGuesses);
+            boundsLBL.Text = $"Your number is between {binarySearcher.LowerBound} and {binarySearcher.UpperBound - 1}.";
+        }
+
+        private void undoBTN_Click(object sender, EventArgs e)
+        {
+            if (stack.Count > 1)
+            {
+                guesses--;
+                stack.Pop();
+                binarySearcher = stack.Pop();
+                stack.Push(binarySearcher);
+                ShowBinarySearcherData();
+            }
         }
     }
 }
