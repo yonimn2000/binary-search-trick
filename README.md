@@ -1,6 +1,6 @@
 # Binary Search Trick
 
-A simple game to guess a number a user thinks of with log(n) steps.
+A simple game to guess a number a user thinks of with log<sub>2</sub>(n) steps.
 
 ## Screenshots
 
