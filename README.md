@@ -4,6 +4,8 @@ A simple game to guess a number a user thinks of with log<sub>2</sub>(n) steps.
 
 ## Screenshots
 
-![screenshot1](media/screenshot1.png)
+![Screenshot](media/screenshot.png)
 
-![screenshot2](media/screenshot2.png)
+Trying to guess `987654`:
+
+![Gameplay](media/gameplay.gif)
